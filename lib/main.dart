@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:login_todo_app/presentation/auth/signin.dart';
+import 'package:login_todo_app/presentation/auth/pages/signin.dart';
+import 'service_locator.dart';
 
 void main() {
+  setUpServiceLocator();
   runApp(const MyApp());
 }
 
