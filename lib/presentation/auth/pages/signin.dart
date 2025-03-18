@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:login_todo_app/presentation/auth/pages/signup.dart';
 
 class SigninPage extends StatefulWidget {
-  SigninPage({super.key});
+  const SigninPage({super.key});
 
   @override
   State<SigninPage> createState() => _SigninPageState();
@@ -92,7 +93,12 @@ class _SigninPageState extends State<SigninPage> {
                 children: [
                   Text("Don't have an account?"),
                   GestureDetector(
-                    onTap: () => (),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupPage()));
+                    },
                     child: Text(
                       "SignUp",
                       style: TextStyle(

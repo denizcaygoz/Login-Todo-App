@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_todo_app/presentation/auth/pages/signin.dart';
+import 'package:login_todo_app/presentation/auth/pages/signup.dart';
 import 'service_locator.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Login-Todo-App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.yellow[200]),
-      home: SigninPage(),
+      home: SignupPage(),
     );
   }
 }
