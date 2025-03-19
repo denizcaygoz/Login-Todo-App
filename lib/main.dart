@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:login_todo_app/common/bloc/auth/auth_state.dart';
 import 'package:login_todo_app/common/bloc/auth/auth_state_cubit.dart';
 import 'package:login_todo_app/presentation/auth/pages/signin.dart';
 import 'package:login_todo_app/presentation/auth/pages/signup.dart';
 import 'package:login_todo_app/presentation/home/pages/todopage.dart';
 import 'service_locator.dart';
+import 'dart:developer' as developer;
 
-void main() {
-  setUpServiceLocator();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setUpServiceLocator();
   runApp(const MyApp());
 }
 

@@ -16,9 +16,8 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(error);
     }, (data) async {
       Response response = data;
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('jwtToken', response.data['jwtToken']);
+      sl<SharedPreferences>().setString('jwtToken', response.data['jwtToken']);
+      sl<SharedPreferences>().setString('username', response.data['username']);
       return Right(response);
     });
   }
