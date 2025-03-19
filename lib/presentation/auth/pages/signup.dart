@@ -8,6 +8,8 @@ import 'package:login_todo_app/domain/usecases/signup.dart';
 import 'package:login_todo_app/presentation/auth/pages/signin.dart';
 import 'package:login_todo_app/service_locator.dart';
 
+import '../../home/pages/todopage.dart';
+
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
@@ -27,7 +29,7 @@ class SignupPage extends StatelessWidget {
             if (state is ButtonSuccessState) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const SigninPage()),
+                MaterialPageRoute(builder: (context) => const TodoPage()),
               );
             } else if (state is ButtonFailureState) {
               var snackBar = SnackBar(content: Text(state.errorMessage));
