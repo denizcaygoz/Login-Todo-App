@@ -3,4 +3,5 @@ class ApiUrls {
   static const register = '${baseURL}auth/register';
   static const signin = '${baseURL}auth/signin';
   static const refreshToken = '${baseURL}auth/refresh';
+  static const postTodos = '${baseURL}user/todolist';
 }
