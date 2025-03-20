@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:login_todo_app/common/widgets/dialog/dialog_box.dart';
@@ -5,6 +7,7 @@ import 'package:login_todo_app/data/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../domain/entities/todo_tile.dart';
+import '../../../domain/usecases/refresh_token.dart';
 import '../../../service_locator.dart';
 
 class TodoPage extends StatefulWidget {
@@ -21,6 +24,8 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void initState() {
+    debugPrint("initstate called");
+    startTokenRequest();
     if (todosBox.get("todolistBox") == null) {
       db.createInitialData();
     } else {
@@ -28,6 +33,20 @@ class _TodoPageState extends State<TodoPage> {
     }
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    //call backend
+    super.dispose();
+  }
+
+  // Send periodically token request to server.
+  // Refresh token sent and set to the recieved token to shared pref jwtToken
+  void startTokenRequest() {
+    Timer.periodic(Duration(minutes: 15), (Timer timer) async {
+      await sl<RefreshTokenUseCase>().call();
+    });
   }
 
   void checkBoxChanged(bool? value, int index) {
