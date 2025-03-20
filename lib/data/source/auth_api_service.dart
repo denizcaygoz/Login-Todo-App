@@ -14,6 +14,7 @@ abstract class AuthApiService {
   Future<Either> signin(SigninReqParams signinReqParams);
   Future<Either> refreshToken();
   Future<Either> postTodos(PostTodosReqParams postTodosReqParams);
+  Future<Either> getTodos();
 }
 
 class AuthApiServiceImpl extends AuthApiService {
@@ -63,6 +64,23 @@ class AuthApiServiceImpl extends AuthApiService {
     try {
       var response = await sl<DioClient>().post(ApiUrls.postTodos,
           data: postTodosReqParams.toMap(),
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
+      return Right(response);
+    } on DioException catch (e) {
+      return Left(e.response!.data['message']);
+    }
+  }
+
+  @override
+  Future<Either> getTodos() async {
+    var prefs = sl<SharedPreferences>();
+    var token = prefs.getString("jwtToken");
+    try {
+      var response = await sl<DioClient>().post(ApiUrls.getTodos,
           options: Options(
             headers: {
               'Authorization': 'Bearer $token',

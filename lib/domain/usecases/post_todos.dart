@@ -4,8 +4,7 @@ import '../../data/models/post_todos_req_params.dart';
 import '../../service_locator.dart';
 import '../repository/auth.dart';
 
-class SigninUseCase implements UseCase<Either, PostTodosReqParams> {
-  //calling the signup method in data/repository/auth.dart
+class PostTodosUseCase implements UseCase<Either, PostTodosReqParams> {
   @override
   Future<Either> call({PostTodosReqParams? param}) async {
     return sl<AuthRepository>().postTodos(param!);

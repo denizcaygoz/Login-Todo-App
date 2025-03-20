@@ -1,12 +1,14 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:login_todo_app/common/widgets/dialog/dialog_box.dart';
 import 'package:login_todo_app/data/database.dart';
+import 'package:login_todo_app/domain/usecases/get_todos.dart';
 import 'package:login_todo_app/domain/usecases/post_todos.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:developer' as developer;
 import '../../../data/models/post_todos_req_params.dart';
 import '../../../domain/entities/todo_tile.dart';
 import '../../../domain/entities/todos.dart';
@@ -27,6 +29,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void initState() {
+    getTodosFromServer();
     startTokenRequest();
     if (todosBox.get("todolistBox") == null) {
       db.createInitialData();
@@ -39,15 +42,45 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void dispose() {
+    developer.log("Existing the app");
     postTodosToServer();
     super.dispose();
   }
 
-  void postTodosToServer() {
+  void getTodosFromServer() async {
+    try {
+      dartz.Either result = await sl<GetTodosUseCase>().call();
+      result.fold((error) {
+        developer.log("Error fetching todos: $error",
+            name: "getTodosFromServer");
+      }, (data) {
+        db.toDoList = data;
+        db.updateData();
+        developer.log("Fetched todos successfully: ${db.toDoList}",
+            name: "getTodosFromServer");
+      });
+    } catch (e) {
+      developer.log("Exception occurred: ${e.toString()}",
+          name: "getTodosFromServer");
+    }
+  }
+
+  void postTodosToServer() async {
     final postTodosParams = PostTodosReqParams(
       todos: db.toDoList.map((todo) => todo.toMap()).toList(),
     );
-    sl<PostTodosUseCase>().call(param: postTodosParams);
+    try {
+      dartz.Either result =
+          await sl<PostTodosUseCase>().call(param: postTodosParams);
+      result.fold((error) {
+        developer.log("Error posting todos: $error", name: "postTodosToServer");
+      }, (data) {
+        developer.log("Todos posted successfully: $data",
+            name: "postTodosToServer");
+      });
+    } catch (e) {
+      developer.log("Exception: ${e.toString()}", name: "postTodosToServer");
+    }
   }
 
   // Send periodically token request to server.

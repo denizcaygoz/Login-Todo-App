@@ -9,15 +9,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'data/repository/auth.dart';
 import 'data/source/auth_local_service.dart';
 import 'domain/repository/auth.dart';
+import 'domain/usecases/get_todos.dart';
 import 'domain/usecases/is_logged_in.dart';
+import 'domain/usecases/post_todos.dart';
 import 'domain/usecases/refresh_token.dart';
 import 'domain/usecases/signin.dart';
 import 'domain/usecases/signup.dart';
+import 'package:path_provider/path_provider.dart';
 
 final sl = GetIt.instance;
 
 Future<void> setUpServiceLocator() async {
-  Hive.init('hive_storage');
+  final appDocumentDir = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
   final todoListBox = await Hive.openBox('todolistBox');
 
   sl.registerSingleton<Box>(todoListBox);
@@ -46,4 +50,7 @@ Future<void> setUpServiceLocator() async {
   sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
 
   sl.registerSingleton<RefreshTokenUseCase>(RefreshTokenUseCase());
+
+  sl.registerSingleton<PostTodosUseCase>(PostTodosUseCase());
+  sl.registerSingleton<GetTodosUseCase>(GetTodosUseCase());
 }

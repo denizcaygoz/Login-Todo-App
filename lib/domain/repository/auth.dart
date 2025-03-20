@@ -9,4 +9,5 @@ abstract class AuthRepository {
   Future<Either> signin(SigninReqParams signinReqParams);
   Future<Either> refreshToken();
   Future<Either> postTodos(PostTodosReqParams postTodosReqParams);
+  Future<Either> getTodos();
 }

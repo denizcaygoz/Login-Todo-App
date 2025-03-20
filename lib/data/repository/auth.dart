@@ -40,10 +40,24 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(error);
     }, (data) async {
       Response response = data;
+
       sl<SharedPreferences>().setString('jwtToken', response.data['jwtToken']);
       sl<SharedPreferences>().setString('username', response.data['username']);
+
       sl<Box>().clear();
-      sl<Box>().put("todolistBox", response.data['todos']);
+
+      //Converting response.data['todos'] to a list of TodosModel
+      List<TodosModel> todosList = (response.data['todos'] as List)
+          .map((todo) => TodosModel.fromMap(todo))
+          .toList();
+
+      //Converting TodosModel list to TodosEntity list
+      List<TodosEntity> todosEntityList =
+          todosList.map((todo) => todo.toEntity()).toList();
+
+      //Storing the entity list in Hive database
+      sl<Box>().put("todolistBox", todosEntityList);
+
       return Right(response);
     });
   }
@@ -77,6 +91,23 @@ class AuthRepositoryImpl extends AuthRepository {
       List<TodosEntity> todosEntityList =
           todosList.map((todo) => todo.toEntity()).toList();
 
+      return Right(todosEntityList);
+    });
+  }
+
+  @override
+  Future<Either> getTodos() async {
+    Either result = await sl<AuthApiService>().getTodos();
+    return result.fold((error) {
+      return Left(error);
+    }, (data) async {
+      Response response = data;
+      List<TodosModel> todosList = (response.data as List)
+          .map((todo) => TodosModel.fromMap(todo))
+          .toList();
+
+      List<TodosEntity> todosEntityList =
+          todosList.map((todo) => todo.toEntity()).toList();
       return Right(todosEntityList);
     });
   }
