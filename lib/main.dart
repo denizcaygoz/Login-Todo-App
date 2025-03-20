@@ -23,22 +23,23 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthStateCubit()..appStarted(),
       child: MaterialApp(
-          title: 'Login-Todo-App',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(primaryColor: Colors.yellow[200]),
-          home: BlocBuilder<AuthStateCubit, AuthState>(
-            builder: (context, state) {
-              if (state is Authenticated) {
-                //user has already token and no need to sign in again.
-                return TodoPage();
-              }
-              if (state is UnAuthenticated) {
-                //user has no or expired token and needs to sign in again.
-                return SigninPage();
-              }
-              return Container();
-            },
-          )),
+        title: 'Login-Todo-App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primaryColor: Colors.blue[300]),
+        home: BlocBuilder<AuthStateCubit, AuthState>(
+          builder: (context, state) {
+            if (state is Authenticated) {
+              //user has already token and no need to sign in again.
+              return TodoPage();
+            }
+            if (state is UnAuthenticated) {
+              //user has no or expired token and needs to sign in again.
+              return SigninPage();
+            }
+            return Container();
+          },
+        ),
+      ),
     );
   }
 }

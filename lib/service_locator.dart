@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:login_todo_app/core/network/dio_client.dart';
+import 'package:login_todo_app/data/database.dart';
 import 'package:login_todo_app/data/source/auth_api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
@@ -23,6 +24,8 @@ Future<void> setUpServiceLocator() async {
   sl.registerSingleton<SharedPreferences>(prefs);
 
   sl.registerSingleton<DioClient>(DioClient());
+
+  sl.registerSingleton<ToDoDataBase>(ToDoDataBase());
 
   // Services
   sl.registerSingleton<AuthApiService>(AuthApiServiceImpl());
