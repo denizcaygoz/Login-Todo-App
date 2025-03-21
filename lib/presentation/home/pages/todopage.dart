@@ -29,11 +29,13 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void initState() {
-    getTodosFromServer();
+    //getTodosFromServer();
     startTokenRequest();
     if (todosBox.get("todolistBox") == null) {
       db.createInitialData();
+      developer.log("INIT STATE IF");
     } else {
+      developer.log("INIT STATE ELSE");
       db.loadData();
     }
 

@@ -15,13 +15,11 @@ import 'domain/usecases/post_todos.dart';
 import 'domain/usecases/refresh_token.dart';
 import 'domain/usecases/signin.dart';
 import 'domain/usecases/signup.dart';
-import 'package:path_provider/path_provider.dart';
 
 final sl = GetIt.instance;
 
 Future<void> setUpServiceLocator() async {
-  final appDocumentDir = await getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDir.path);
+  Hive.init('hive_storage');
   final todoListBox = await Hive.openBox('todolistBox');
 
   sl.registerSingleton<Box>(todoListBox);

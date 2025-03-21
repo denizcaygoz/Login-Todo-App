@@ -23,6 +23,11 @@ class ToDoDataBase {
     _todoBox.put("todolistBox", toDoList);
   }
 
+  void setUpData() {
+    _todoBox.clear();
+    _todoBox.put("todolistBox", toDoList);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'todos': toDoList

@@ -1,5 +1,12 @@
+import 'package:hive/hive.dart';
+//part 'todos.g.dart';
+
+@HiveType(typeId: 1)
 class TodosEntity {
+  @HiveField(0)
   final String task;
+
+  @HiveField(1)
   bool completed;
 
   TodosEntity({
