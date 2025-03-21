@@ -1,16 +1,32 @@
-# login_todo_app
+# Flutter Todo App - User Authentication & Task Management
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+This is a **Flutter** application which allows users to **register, log in, and create  todo lists**. The app interacts with a **Spring Boot backend** for authentication and data storage. JWT tokens are used in API requests to ensure secure access to the backend.
+🔗 **[Login-Todo-App Backend Project](https://github.com/denizcaygoz/Login-Todo-App-Backend)** 
+---
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **User Authentication**: Login and Signup using JWT.
+- **Todo List**: Create, update, and delete todo list of a user.
+- **Local Storage**: Uses **Hive** and **Shared Preferences** for local storage.
+- **REST API**: Communicates with a Spring Boot backend.
+- **State Management**: Uses **Flutter Bloc** for state management.
+- **Auto Token Refresh**: Refreshes JWT token periodically.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Authentication Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `POST` | `/auth/login` | Login with email and password |
+| `POST` | `/auth/register` | Register a new user |
+
+### Todo Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/user/todolist` | Fetch user's todo list |
+| `POST` | `/user/todolist` | Update user's todo list |
