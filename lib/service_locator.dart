@@ -14,12 +14,14 @@ import 'domain/usecases/is_logged_in.dart';
 import 'domain/usecases/post_todos.dart';
 import 'domain/usecases/refresh_token.dart';
 import 'domain/usecases/signin.dart';
+import "domain/entities/todos.dart";
 import 'domain/usecases/signup.dart';
 
 final sl = GetIt.instance;
 
 Future<void> setUpServiceLocator() async {
   Hive.init('hive_storage');
+  //Hive.registerAdapter<TodosEntity>(TodosEntityAdapter());
   final todoListBox = await Hive.openBox('todolistBox');
 
   sl.registerSingleton<Box>(todoListBox);
