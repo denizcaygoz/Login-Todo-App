@@ -1,9 +1,8 @@
 # Flutter Todo App - User Authentication & Task Management
-
-## Overview
-
 This is a **Flutter** application which allows users to **register, log in, and create  todo lists**. The app interacts with a **Spring Boot backend** for authentication and data storage. JWT tokens are used in API requests to ensure secure access to the backend.
+
 🔗 **[Login-Todo-App Backend Project](https://github.com/denizcaygoz/Login-Todo-App-Backend)** 
+
 ---
 
 ## Features
